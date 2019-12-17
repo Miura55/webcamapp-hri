@@ -11,8 +11,7 @@ class Camera(object):
                 self.frames.append(open('./static/img/dammy/img' + f + '.jpeg', 'rb').read())
         else:
             for f in self.files:
-                self.frames.append(open(f).read())
-
+                self.frames.append(open(f, "rb").read())
 
     def get_frame(self):
         return self.frames[int(time()) % len(self.files)]
