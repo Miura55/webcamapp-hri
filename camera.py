@@ -5,8 +5,9 @@ import glob
 class Camera(object):
     def __init__(self):
         self.frames = []
-        # self.files = glob.glob("./static/img/*.jpg")
+        # ファイルを数字順に読み込む
         self.files = sorted(glob.glob('./static/img/*.jpg'), key=numericalSort)
+        # ファイルがない場合はダミー画像を表示
         if len(self.files) == 0:
             self.files = ['0', '1', '2', '3', '4']
             for f in self.files:
@@ -15,7 +16,6 @@ class Camera(object):
             for f in self.files:
                 self.frames.append(open(f, "rb").read())
     def get_frame(self):
-        # return self.frames[int(time()) % len(self.files)]
         return self.frames[-1]
 
 def numericalSort(value):

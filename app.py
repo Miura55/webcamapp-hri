@@ -10,15 +10,10 @@ app = Flask(__name__)
 def index():
     return render_template('view.html')
 
-def generate(camera):
-    while True:
-        frame=camera.get_frame()
-        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
 @app.route('/feed')
 def feed():
-    # generateメソッドの引数に画像ファイルを指定する
-    return Response(generate(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+    frame=Camera().get_frame()
+    return Response(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True)
